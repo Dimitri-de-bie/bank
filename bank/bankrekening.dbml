@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="rekening" Class="bankrekeningDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(local)\SQLEXPRESS;Initial Catalog=rekening;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="bank.Properties.Settings" SettingsPropertyName="rekeningConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.type" Member="types">
+    <Type Name="type">
+      <Column Name="Naam" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Rente" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="MaxOpname" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="type_Account" Member="Accounts" ThisKey="Naam" OtherKey="Type" Type="Account" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customer" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="BSN" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="voorletters" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="voornaam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="achternaam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="adres" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="postcode" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="woonplaats" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="telefoonnummer" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Customer_Account" Member="Accounts" ThisKey="BSN" OtherKey="Rekeningeigenaar" Type="Account" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Account" Member="Accounts">
+    <Type Name="Account">
+      <Column Name="IBAN" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Rekeningeigenaar" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Saldo" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Startdatum" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="afsluitdaten" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="type_Account" Member="type1" ThisKey="Type" OtherKey="Naam" Type="type" IsForeignKey="true" />
+      <Association Name="Customer_Account" Member="Customer" ThisKey="Rekeningeigenaar" OtherKey="BSN" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
